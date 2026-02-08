@@ -96,7 +96,7 @@ button{
   
   /* 4. Soft rounded corners */
   border-radius: 15px;
-  
+  cursor: pointer;
   /* 5. Optional shadow for depth */
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   
@@ -104,6 +104,9 @@ button{
   
   color: white;
 }
+button:active {
+            transform: scale(0.9); /* Shrinks to 90% size */
+        }
 /* 4. The 'Script' that moves the background position */
 @keyframes flowAnimation {
   0% {
