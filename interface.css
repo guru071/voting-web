@@ -1,0 +1,118 @@
+body{
+    align-content: center;
+    justify-items: center;
+
+  height: 100vh;
+  /* 1. Create a gradient with your 2 or 3 favorite colors */
+  background: linear-gradient(-45deg, #3498db, #9b59b6, #1abc9c);
+  
+  /* 2. Make the background 400% bigger than the screen so we have room to move it */
+  background-size: 400% 400%;
+  
+  /* 3. Attach the animation (15 seconds, stays smooth, repeats forever) */
+  animation: flowAnimation 15s ease infinite;
+  
+  height: 100vh;
+  margin: 0;
+}
+div{
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    width :300px;
+    height: 200px;
+    border-radius: 10%;
+    /* 1. Semi-transparent background color */
+  background: rgba(255, 255, 255, 0.2); 
+  
+  /* 2. The blur effect (The "Glass" part) */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  
+  /* 3. A subtle border to define the edges */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  
+  /* 4. Soft rounded corners */
+  border-radius: 15px;
+  
+  /* 5. Optional shadow for depth */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  /* General styling */
+  padding: 20px;
+  color: white;
+  font-size: 17;
+
+}
+td, th {
+  padding-top: 30px;
+  padding-bottom: 15px;
+  font-family: "Segoe UI";
+  font-size: 18px;
+  font-weight: 1000;
+}
+
+.vtid{
+    margin-left: 15px;
+    border-radius: 10px;
+    height: 25px;
+     background: rgba(255, 255, 255, 0.2); 
+  
+  /* 2. The blur effect (The "Glass" part) */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  
+  /* 3. A subtle border to define the edges */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  
+  /* 4. Soft rounded corners */
+  border-radius: 15px;
+  border-width: 0px;
+  border-color: transparent;
+  /* 5. Optional shadow for depth */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  /* General styling */
+  padding: 7px;
+  color: blackwhite;
+  font-size: 20;
+  
+}
+button{
+  align-items: center;
+  width: 70px;
+  font-size: 17px;
+  font-weight: bold;
+  border-radius: 9px;
+   /* 1. Semi-transparent background color */
+  background: rgba(255, 255, 255, 0.2); 
+  
+  /* 2. The blur effect (The "Glass" part) */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  
+  /* 3. A subtle border to define the edges */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  
+  /* 4. Soft rounded corners */
+  border-radius: 15px;
+  
+  /* 5. Optional shadow for depth */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  /* General styling */
+  
+  color: white;
+}
+/* 4. The 'Script' that moves the background position */
+@keyframes flowAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
