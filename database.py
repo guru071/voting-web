@@ -10,7 +10,7 @@ aadhar_no INTEGER NOT NULL,
 birth_date DATE NOT NULL,
 age INTEGER NOT NULL,
 vote_count INTEGER NOT NULL,
-active_state BOOLEAN NOT NULL DEFAULT 1,
+active_state BOOLEAN NOT NULL DEFAULT 1
 );
 """
 cursor.execute(sql_query)
