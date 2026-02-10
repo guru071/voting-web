@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TN VOTING</title>
-        <link rel="stylesheet" href="interface.css">
-    </head>
-    <body>
-        <div>
-            <table>
-                <tr>
-                    <td class="s">Vote id</td><td><input class="vtid" type="text" placeholder="Enter vote id"></td>
-                </tr>
-                <tr>
-                    <td class="s">Birth</td><td><input class="vtid" type="date" placeholder="Enter date of birth"></td>
-                </tr>
-            </table>
-            <center><button class="nextbtn" onclick="">Next</button></center>
-        </div>
-    </body>
+<head>
+  <title>TN VOTING</title>
+  <link rel="stylesheet" href="interface.css">
+</head>
+<script src="backend.js"></script>
+
+<body class="voting-page">
+
+  <div class="card">
+    <table>
+      <tr>
+        <td class="s">Voter ID</td>
+      </tr>
+      <tr>
+        <td>
+          <input class="vtid" type="text" placeholder="Enter Voter ID">
+        </td>
+      </tr>
+
+      <tr>
+        <td class="s">Date of Birth</td>
+      </tr>
+      <tr>
+        <td>
+          <input class="vtid" type="date">
+        </td>
+      </tr>
+    </table>
+
+    <button class="nextbtn" id="nextBtn">Next</button>
+
+  </div>
+
+</body>
 </html>

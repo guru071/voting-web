@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TN VOTING</title>
+  <link rel="stylesheet" href="interface.css">
+</head>
+<script>
+  const otpInputs = document.querySelectorAll(".otp");
+
+  otpInputs.forEach((input, index) => {
+
+    input.addEventListener("keydown", (e) => {
+
+      // Allow only numbers, arrows, backspace, end
+      if (
+        !(
+          (e.key >= "0" && e.key <= "9") ||
+          ["Backspace", "ArrowLeft", "ArrowRight", "End", "Home", "Tab"].includes(e.key)
+        )
+      ) {
+        e.preventDefault();
+      }
+
+      // Move right
+      if (e.key === "ArrowRight" && index < otpInputs.length - 1) {
+        otpInputs[index + 1].focus();
+      }
+
+      // Move left
+      if (e.key === "ArrowLeft" && index > 0) {
+        otpInputs[index - 1].focus();
+      }
+
+      // END → go to last box
+      if (e.key === "End") {
+        otpInputs[otpInputs.length - 1].focus();
+      }
+
+      // HOME → go to first box
+      if (e.key === "Home") {
+        otpInputs[0].focus();
+      }
+
+      // Backspace logic
+      if (e.key === "Backspace" && input.value === "" && index > 0) {
+        otpInputs[index - 1].focus();
+      }
+    });
+
+    // Auto move forward when number entered
+    input.addEventListener("input", () => {
+      if (input.value && index < otpInputs.length - 1) {
+        otpInputs[index + 1].focus();
+      }
+    });
+  });
+</script>
+
+<body class="aadhar-page">
+
+  <div class="card">
+    <table>
+      <tr>
+        <td class="s">Aadhaar</td>
+      </tr>
+      <tr>
+        <td>
+          <input class="vtid" type="text" placeholder="Enter Aadhaar">
+        </td>
+      </tr>
+    </table>
+
+    <!-- OTP SECTION -->
+     <h4>Otp</h4>
+    <div class="otp-container">
+  <input class="otp" type="tel" inputmode="numeric" maxlength="1">
+  <input class="otp" type="tel" inputmode="numeric" maxlength="1">
+  <input class="otp" type="tel" inputmode="numeric" maxlength="1">
+  <input class="otp" type="tel" inputmode="numeric" maxlength="1">
+  <input class="otp" type="tel" inputmode="numeric" maxlength="1">
+</div>
+
+
+    <button class="nextbtn">Next</button>
+  </div>
+
+</body>
+</html>
