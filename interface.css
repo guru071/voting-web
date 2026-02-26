@@ -167,12 +167,7 @@ button:active {
     justify-content: center;
   }
 
-  .card{
-    width: 100%;          /* Full width on mobile */
-    max-width: 400px;     /* Prevent too wide */
-    margin: auto;
-    padding: 18px;
-  }
+
 
   h2{
     font-size: 20px;
@@ -194,10 +189,7 @@ button:active {
     font-size: 16px;
   }
 
-  button{
-    font-size: 15px;
-    padding: 9px;
-  }
+
    
 
   .card {
@@ -232,11 +224,4 @@ button:active {
   }
 
 
-}
-/* =========================
-   MOBILE VIEW ONLY
-========================= */
-@media (max-width: 480px) {
-
- 
 }
