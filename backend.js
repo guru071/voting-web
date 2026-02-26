@@ -1,9 +1,20 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const nextBtn = document.getElementById("nextBtn");
+document.querySelector(".nextbtn")
+  .addEventListener("click", click_next);
 
-  if (nextBtn) {
-    nextBtn.addEventListener("click", () => {
-      window.location.href = "aadhar.html";
-    });
+function click_next() {
+
+  const voteid = document.getElementById("voteid").value;
+  const birth = document.getElementById("birth").value;
+
+  if (voteid === "guru" && birth === "2026-02-02") {
+
+    // Save login state
+    sessionStorage.setItem("vote_found", "true");
+
+    // Go to Aadhaar page
+    window.location.href = "aadhar.html";
+
+  } else {
+    alert("Invalid Login Details");
   }
-});
+}

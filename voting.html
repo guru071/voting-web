@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Kavivanar&display=swap');
+</style>
   <title>TN VOTING</title>
   <link rel="stylesheet" href="interface.css">
 </head>
-<script src="backend.js"></script>
+<script src="backend.js" type="module"></script>
 
-<body class="voting-page">
-
+<body class="voting-page"><center><!--
+<h2>வந்தாரை வாழவைக்கும் தமிழ்</h2><br>-->
   <div class="card">
     <table>
       <tr>
@@ -15,7 +18,7 @@
       </tr>
       <tr>
         <td>
-          <input class="vtid" type="text" placeholder="Enter Voter ID">
+          <input class="vtid" type="text" id="voteid" placeholder="Enter Voter ID">
         </td>
       </tr>
 
@@ -24,14 +27,13 @@
       </tr>
       <tr>
         <td>
-          <input class="vtid" type="date">
+          <input class="vtid" id ="birth" type="date">
         </td>
       </tr>
     </table>
 
     <button class="nextbtn" id="nextBtn">Next</button>
-
   </div>
-
+</center>
 </body>
 </html>
