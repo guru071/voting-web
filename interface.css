@@ -169,7 +169,7 @@ button:active {
     border-radius: 14px;
   }
 body.aadhar-page .card{
-
+max-width:300px;
 }
 }
 
@@ -222,6 +222,7 @@ body.aadhar-page .card{
 
 
 }
+
 
 
 
