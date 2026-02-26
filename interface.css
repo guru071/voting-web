@@ -171,6 +171,8 @@ button:active {
 body.aadhar-page .card{
 max-width:300px;
 }
+body.voting-page .card{
+   max-width:420px;
 }
 
   body {
@@ -222,6 +224,7 @@ max-width:300px;
 
 
 }
+
 
 
 
