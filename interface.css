@@ -15,9 +15,10 @@ h2{
 /* =========================
    COMMON BODY STYLE
 ========================= */
+
 body {
   min-height: 100vh;
-
+display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
@@ -155,4 +156,45 @@ button:active {
   100% {
     background-position: 0% 50%;
   }
+}
+/*---------mobile view-------------*/
+/*---------mobile view-------------*/
+@media (max-width: 768px){
+
+  body{
+    padding: 20px;
+  }
+
+  .card{
+    width: 100%;          /* Full width on mobile */
+    max-width: 400px;     /* Prevent too wide */
+    margin: auto;
+    padding: 18px;
+  }
+
+  h2{
+    font-size: 20px;
+    text-align: center;
+  }
+
+  td{
+    font-size: 14px;
+  }
+
+  .vtid, .aadhar{
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .otp{
+    width: 30px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  button{
+    font-size: 15px;
+    padding: 9px;
+  }
+
 }
