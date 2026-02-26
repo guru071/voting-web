@@ -165,15 +165,19 @@ button:active {
     width: 100% !important;
     max-width: 380px;
     margin: auto;
+    padding: 18px;
+    border-radius: 14px;
   }
-
+body.aadhar-page .card{
+max-width: 320px;
 }
+}
+
   body {
     padding: 15px;
     align-items: center;
     justify-content: center;
   }
-
 
 
   h2{
@@ -196,19 +200,10 @@ button:active {
     font-size: 16px;
   }
 
-
-   
-
-  .card {
-    width: 100%;
-    max-width: 360px;
-    padding: 18px;
-    border-radius: 14px;
-  }
-
   td {
     font-size: 14px;
   }
+
 
   .inputs {
     gap: 6px;
@@ -227,5 +222,3 @@ button:active {
 
 
 }
-
-
