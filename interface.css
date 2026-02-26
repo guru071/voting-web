@@ -161,8 +161,10 @@ button:active {
 /*---------mobile view-------------*/
 @media (max-width: 768px){
 
-  body{
-    padding: 20px;
+  body {
+    padding: 15px;
+    align-items: center;
+    justify-content: center;
   }
 
   .card{
@@ -196,5 +198,45 @@ button:active {
     font-size: 15px;
     padding: 9px;
   }
+   
 
+  .card {
+    width: 100%;
+    max-width: 360px;
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  td {
+    font-size: 14px;
+  }
+
+  .aadhar {
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .inputs {
+    gap: 6px;
+  }
+
+  .otp {
+    width: 32px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 9px;
+    font-size: 14px;
+  }
+
+
+}
+/* =========================
+   MOBILE VIEW ONLY
+========================= */
+@media (max-width: 480px) {
+
+ 
 }
