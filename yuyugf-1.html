@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Voting System</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:0;
+    font-family:Segoe UI,sans-serif;
+    background:linear-gradient(135deg,#e3f2fd,#fff);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:95%;
+    max-width:900px;
+    background:#fff;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+h1{
+    text-align:center;
+    color:#0d47a1;
+    margin-bottom:30px;
+}
+
+/* GRID */
+.candidates{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+/* CARD */
+.candidate{
+    background:#f5f9ff;
+    border-radius:15px;
+    padding:20px;
+    cursor:pointer;
+    border:3px solid transparent;
+    transition:.3s;
+    text-align:center;
+}
+
+.candidate:hover{
+    transform:translateY(-6px);
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+/* SELECTED */
+.candidate.selected{
+    border:3px solid #1976d2;
+    background:#e3f2fd;
+    transform:scale(1.05);
+}
+
+/* IMAGE */
+.candidate img{
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    border:5px solid #1976d2;
+    object-fit:cover;
+    margin-bottom:15px;
+}
+
+.candidate h3{
+    margin:5px 0;
+    color:#0d47a1;
+    font-size:22px;
+}
+
+.candidate p{
+    color:#555;
+}
+
+/* BUTTONS */
+.buttons{
+    display:flex;
+    gap:15px;
+    margin-top:35px;
+}
+
+button{
+    flex:1;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+/* VOTE */
+#voteBtn{
+    background:#ffa000;
+    color:#fff;
+}
+
+#voteBtn:hover{
+    background:#ff8f00;
+}
+
+/* SUBMIT */
+#submitBtn{
+    background:#1976d2;
+    color:#fff;
+}
+
+#submitBtn:hover{
+    background:#0d47a1;
+}
+
+button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+/* MESSAGE */
+.message{
+    text-align:center;
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    display:none;
+}
+
+.success{color:#2e7d32;}
+.error{color:#d32f2f;}
+.info{color:#f57c00;}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🗳️ Cast Your Vote</h1>
+
+<div class="candidates">
+
+<div class="candidate" data-name="M.K Stalin">
+    <img src="https://www.dmk.in/_next/static/media/dmklogo.121ba4e5.webp">
+    <h3>M.K Stalin</h3>
+    <p>திராவிட முன்னேற்றக் கழகம் (DMK)</p>
+</div>
+
+<div class="candidate" data-name="THALAPATHY VIJAY">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNkyJkf2zapnovPKmlVPmxXoXIRA1FnPCfKA&s">
+    <h3>THALAPATHY VIJAY</h3>
+    <p>தமிழக வெற்றிக் கழகத்தின் (TVK)</p>
+</div>
+
+<div class="candidate" data-name="Edappadi K. Palaniswami">
+    <img src="https://imgs.search.brave.com/kPP5GE25AIVNYXRfh_DRbXX64RvhkNCFChQmH9TiYNE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/Zm90dy5pbmZvL2lt/YWdlcy9pL2luJTdE/YWRtazIuZ2lm.gif">
+    <h3>Edappadi K. Palaniswami</h3>
+    <p>அனைத்திந்திய அண்ணா திராவிட முன்னேற்றக் கழகம்</p>
+</div>
+
+<div class="candidate" data-name="Seeman">
+    <img src="https://imgs.search.brave.com/AIXTmko4_BaY0Pb67OGCxM8WtkMcTSJPFkaT5rT8fK4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vd3d3Lm5h/YW10YW1pbGFyLm9y/Zy93cC1jb250ZW50/L3VwbG9hZHMvMjAy/MC8wNS92aXZhc2F5/aS1jaGlubmFtLW5h/YW0tdGFtaWxhci1r/YXRjaGktZWxlY3Rp/b24tc3ltYm9sLW50/ay0yMDI1LTEtMS5w/bmc_cmVzaXplPTY5/Niw2OTYmc3NsPTE">
+    <h3>Seeman</h3>
+    <p>நாம் தமிழர் கட்சி (NTK)</p>
+</div>
+
+<div class="candidate" data-name="K. Annamalai">
+    <img src="https://imgs.search.brave.com/TCdpRj-n6br-UAy53g0eLSTiIrj96i2Ii8_wHFSfptw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jcnlz/dGFscG5nLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMy8w/NS9ianAtbG9nby1w/bmcucG5n">
+    <h3>K. Annamalai</h3>
+    <p>பாரதிய ஜனதா கட்சி (BJP)</p>
+</div>
+
+<div class="candidate" data-name="Premallatha Vijayakant">
+    <img src="https://imgs.search.brave.com/1PswuyZhANYwNeqN2gzwdFHOelcEC_o0lSD6ij6okzA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly81Lmlt/aW1nLmNvbS9kYXRh/NS9TRUxMRVIvRGVm/YXVsdC8yMDI1LzMv/NDkzNTI1MTU1L0VQ/L0JUL01PLzE1NTgw/OTM3L2RtZGstcGFy/dHktZmxhZy0xMDAw/eDEwMDAucG5n">
+    <h3>Premallatha Vijayakant</h3>
+    <p>தேசிய முற்போக்கு திராவிடக் கழகம் (DMDK)</p>
+</div>
+
+<div class="candidate" data-name="Premallatha Vijayakant">
+    <img src="https://imgs.search.brave.com/I8R9jjCVDD1Qg4T4JMzeBvMwkMkljU7GPjXActyGk20/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9h/L2E2L0ZsYWdfRE1E/Sy5wbmc">
+    <h3>Premallatha Vijayakant</h3>
+    <p>தேசிய முற்போக்கு திராவிடக் கழகம் (DMDK)</p>
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button id="voteBtn">Vote</button>
+<button id="submitBtn" disabled>Submit Vote</button>
+<button id="exportBtn">Export Results</button>
+
+</div>
+
+<div id="message" class="message"></div>
+
+</div>
+
+<script>
+
+const candidates = document.querySelectorAll(".candidate");
+const voteBtn = document.getElementById("voteBtn");
+const submitBtn = document.getElementById("submitBtn");
+const message = document.getElementById("message");
+
+let selectedCandidate = null;
+let confirmed = false;
+
+/* SELECT CANDIDATE */
+candidates.forEach(card=>{
+
+    card.addEventListener("click",()=>{
+
+        if(confirmed) return;
+
+        candidates.forEach(c=>c.classList.remove("selected"));
+
+        card.classList.add("selected");
+
+        selectedCandidate = card.querySelector("h3").innerText;
+
+        showMessage("Selected: " + selectedCandidate,"info");
+
+    });
+
+});
+
+/* VOTE BUTTON */
+voteBtn.addEventListener("click",()=>{
+
+    if(!selectedCandidate){
+        showMessage("Please select a candidate first!","error");
+        return;
+    }
+
+    if(confirm("Confirm selection: "+selectedCandidate+" ?")){
+
+        confirmed = true;
+
+        submitBtn.disabled = false;
+        voteBtn.disabled = true;
+
+        showMessage("Selection confirmed. Now submit your vote.","info");
+    }
+
+});
+
+/* SUBMIT BUTTON */
+submitBtn.addEventListener("click",()=>{
+
+    if(!confirmed) return;
+
+    localStorage.setItem("voted","true");
+    localStorage.setItem("candidate",selectedCandidate);
+
+    showMessage("✅ Vote submitted successfully!","success");
+
+    disableAll();
+
+});
+
+/* MESSAGE */
+function showMessage(text,type){
+
+    message.style.display="block";
+    message.className="message "+type;
+    message.innerText=text;
+
+}
+
+/* DISABLE */
+function disableAll(){
+
+    candidates.forEach(c=>c.style.pointerEvents="none");
+
+    submitBtn.disabled=true;
+    voteBtn.disabled=true;
+
+}
+const exportBtn = document.getElementById("exportBtn");
+
+/* STORE VOTES */
+function saveVote(candidateName) {
+
+    let votes = JSON.parse(localStorage.getItem("votes")) || {};
+
+    if (typeof votes !== "object" || Array.isArray(votes)) {
+        votes = {};
+    }
+
+    votes[candidateName] = (votes[candidateName] || 0) + 1;
+
+    localStorage.setItem("votes", JSON.stringify(votes));
+}
+
+
+/* MODIFY SUBMIT BUTTON */
+submitBtn.addEventListener("click", () => {
+
+    if (!confirmed) return;
+
+    saveVote(selectedCandidate);
+
+    showMessage("✅ Vote submitted successfully!", "success");
+
+    disableAll();
+});
+
+
+/* EXPORT TO EXCEL (CSV) */
+exportBtn.addEventListener("click", () => {
+
+    let votes = JSON.parse(localStorage.getItem("votes"));
+
+    if (!votes || typeof votes !== "object") {
+        alert("No votes recorded yet!");
+        return;
+    }
+
+    let csv = "Candidate,Votes\n";
+
+    Object.entries(votes).forEach(([candidate, count]) => {
+        csv += `"${candidate}",${count}\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Voting_Results.csv";
+    link.click();
+
+    URL.revokeObjectURL(url);
+});
+
+</script>
+
+</body>
+</html>
