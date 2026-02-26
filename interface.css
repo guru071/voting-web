@@ -160,7 +160,14 @@ button:active {
 /*---------mobile view-------------*/
 /*---------mobile view-------------*/
 @media (max-width: 768px){
+ body.aadhar-page .card,
+  body.voting-page .card {
+    width: 100% !important;
+    max-width: 380px;
+    margin: auto;
+  }
 
+}
   body {
     padding: 15px;
     align-items: center;
@@ -220,4 +227,5 @@ button:active {
 
 
 }
+
 
