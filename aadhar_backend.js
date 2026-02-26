@@ -43,9 +43,12 @@ function aadhar_page() {
   if (aadharNo.length === 12 && !isNaN(aadharNo)) {
 
     alert("Valid Aadhaar");
-    
-    // Clear field after success
-    document.getElementById("aadharno").value = "";
+    const no=parseInt(aadharNo,10);
+    if(no==123456789012){
+      sessionStorage.setItem("aadhar_found", "true");
+      window.location.href = "politics.html";
+      
+    }
 
   } else {
     alert("Enter valid Aadhaar number");
