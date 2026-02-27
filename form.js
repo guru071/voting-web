@@ -69,6 +69,7 @@ const name=document.getElementById("name").value.trim();
         message.innerHTML = "<span class='success'>Registration Successful!</span>";
 
         // Clear inputs
+        document.getElementById("name").value="";
         document.getElementById("aadhar").value = "";
         document.getElementById("birth").value = "";
         document.getElementById("phonenumber").value = "";
