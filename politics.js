@@ -1,18 +1,7 @@
-window.onload = function () {
-  
-  const vote_found = sessionStorage.getItem("vote_found");
-const aadhar_found = sessionStorage.getItem("aadhar_found");
-  if (vote_found !== "true" || aadhar_found !=="true") {
-    alert("Unauthorized access");
-    window.location.href = "voting.html";
-  }
-};
-
 /* ELEMENTS */
 const rows = document.querySelectorAll(".candidate-row");
 const voteBtn = document.getElementById("voteBtn");
 const submitBtn = document.getElementById("submitBtn");
-const exportBtn = document.getElementById("exportBtn");
 const message = document.getElementById("message");
 
 /* STATE */
@@ -21,112 +10,84 @@ let confirmed = false;
 
 
 /* ROW CLICK */
-rows.forEach(row=>{
+rows.forEach(row => {
 
-    row.addEventListener("click",()=>{
+    row.addEventListener("click", () => {
 
-        if(confirmed) return;
+        if (confirmed) return;
 
-        rows.forEach(r=>r.classList.remove("selected"));
+        // Remove previous selection
+        rows.forEach(r => r.classList.remove("selected"));
 
+        // Select current
         row.classList.add("selected");
 
+        // Check radio
         row.querySelector("input").checked = true;
 
         selectedRow = row;
 
-        showMsg("Selected: "+row.dataset.leader,"info");
+        showMsg("Selected: " + row.dataset.leader, "info");
 
     });
 
 });
 
 
-/* VOTE */
-voteBtn.addEventListener("click",()=>{
+/* VOTE BUTTON */
+voteBtn.addEventListener("click", () => {
 
-    if(!selectedRow){
-        showMsg("Please select a candidate!","error");
+    if (!selectedRow) {
+        showMsg("Please select a candidate!", "error");
         return;
     }
 
     const leader = selectedRow.dataset.leader;
 
-    if(confirm("Confirm vote for "+leader+" ?")){
+    const confirmVote = confirm("Confirm vote for " + leader + " ?");
+
+    if (confirmVote) {
 
         confirmed = true;
 
         voteBtn.disabled = true;
         submitBtn.disabled = false;
 
-        showMsg("Selection confirmed. Click Submit.","info");
+        showMsg("Selection confirmed. Click Submit.", "info");
     }
 
 });
 
 
-/* SUBMIT */
-submitBtn.addEventListener("click",()=>{
+/* SUBMIT BUTTON */
+submitBtn.addEventListener("click", () => {
 
-    if(!confirmed) return;
+    if (!confirmed) return;
 
-    const data = {
-        party: selectedRow.dataset.party,
-        leader: selectedRow.dataset.leader,
-        time: new Date().toLocaleString()
-    };
-
-    localStorage.setItem("voteData",JSON.stringify(data));
-
-    showMsg("✅ Vote submitted successfully!","success");
+    showMsg("✅ Vote submitted successfully!", "success");
 
     disableAll();
 
 });
 
 
-/* EXPORT */
-exportBtn.addEventListener("click",()=>{
-
-    const data = JSON.parse(localStorage.getItem("voteData"));
-
-    if(!data){
-        alert("No vote found!");
-        return;
-    }
-
-    let csv = "Party,Leader,Time\n";
-    csv += `${data.party},${data.leader},${data.time}`;
-
-    const blob = new Blob([csv],{type:"text/csv"});
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "vote_result.csv";
-    a.click();
-
-    URL.revokeObjectURL(url);
-
-});
-
-
 /* HELPERS */
 
-function showMsg(text,type){
+function showMsg(text, type) {
 
-    message.style.display="block";
-    message.className=type;
-    message.innerText=text;
+    message.style.display = "block";
+    message.className = type;
+    message.innerText = text;
 
 }
 
-function disableAll(){
 
-    rows.forEach(r=>{
-        r.style.pointerEvents="none";
+function disableAll() {
+
+    rows.forEach(row => {
+        row.style.pointerEvents = "none";
     });
 
-    submitBtn.disabled=true;
+    submitBtn.disabled = true;
 
 }
