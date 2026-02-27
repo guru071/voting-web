@@ -7,146 +7,76 @@
 <link rel="icon" href="data:,">
 
 <style>
-    body{
-        margin:0;
-        font-family: Arial, sans-serif;
-        background:#f4f6f9;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        min-height:100vh;
-    }
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#f2f5f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
 
-    .form-box{
-        background:white;
-        padding:25px;
-        border-radius:10px;
-        box-shadow:0 4px 10px rgba(0,0,0,0.1);
-        width:100%;
-        max-width:400px;
-    }
+.form-box{
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    width:100%;
+    max-width:400px;
+}
 
-    h2{
-        text-align:center;
-        margin-bottom:20px;
-    }
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
 
-    .input-group{
-        margin-bottom:15px;
-    }
+.input-group{
+    margin-bottom:15px;
+}
 
-    .input-group label{
-        font-size:14px;
-        font-weight:bold;
-        display:block;
-        margin-bottom:5px;
-    }
+.input-group label{
+    font-weight:bold;
+    font-size:14px;
+    display:block;
+    margin-bottom:5px;
+}
 
-    .input-group input{
-        width:100%;
-        padding:10px;
-        border:1px solid #ccc;
-        border-radius:5px;
-        font-size:14px;
-    }
+.input-group input{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:14px;
+}
 
-    button{
-        width:100%;
-        padding:12px;
-        background:#007bff;
-        color:white;
-        border:none;
-        border-radius:5px;
-        font-size:16px;
-        cursor:pointer;
-    }
+button{
+    width:100%;
+    padding:12px;
+    background:#007bff;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
 
-    button:hover{
-        background:#0056b3;
-    }
+button:hover{
+    background:#0056b3;
+}
 
-    .success{
-        color:green;
-        text-align:center;
-        margin-top:10px;
-    }
-
-    .error{
-        color:red;
-        text-align:center;
-        margin-top:10px;
-    }
+.message{
+    text-align:center;
+    margin-top:10px;
+    font-weight:bold;
+}
+.success{
+    color:green;
+}
+.error{
+    color:red;
+}
 </style>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { 
-    getFirestore, 
-    doc,
-    setDoc,
-    getDoc,
-    Timestamp 
-} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-
-const firebaseConfig = {
-                apiKey: "AIzaSyBjm6WKCRmUNILEub4lKecRx11Lwvf-koM",
-    authDomain: -voting-d09c5.firebaseapp.com",
-    projectId: "tn-voting-d09c5",
-    storageBucket: "tn-voting-d09c5.appspot.com",
-    messagingSenderId: "739902489472",
-    appId: "1:739902489472:web:362809592ddf36884c3765"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.insertdata = async function () {
-
-    const aadhar = document.getElementById("aadhar").value.trim();
-    const birth = document.getElementById("birth").value;
-    const ph_no = document.getElementById("phonenumber").value.trim();
-    const vote_id = document.getElementById("voteid").value.trim();
-    const message = document.getElementById("message");
-
-    message.innerHTML = "";
-
-    if (!aadhar || !birth || !ph_no || !vote_id) {
-        message.innerHTML = "<div class='error'>All fields are required!</div>";
-        return;
-    }
-
-    try {
-
-        // Check if vote_id already exists
-        const docRef = doc(db, "voting", vote_id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            message.innerHTML = "<div class='error'>Vote ID already registered!</div>";
-            return;
-        }
-
-        await setDoc(docRef, {
-            aadhar: aadhar,
-            birth: Timestamp.fromDate(new Date(birth)),
-            isvoted: false,
-            ph_no: ph_no,
-            vote_id: vote_id,
-            createdAt: Timestamp.now()
-        });
-
-        message.innerHTML = "<div class='success'>Registration Successful!</div>";
-
-        document.getElementById("aadhar").value = "";
-        document.getElementById("birth").value = "";
-        document.getElementById("phonenumber").value = "";
-        document.getElementById("voteid").value = "";
-
-    } catch (error) {
-        message.innerHTML = "<div class='error'>" + error.message + "</div>";
-    }
-};
-</script>
 
 </head>
 
@@ -175,10 +105,86 @@ window.insertdata = async function () {
         <input id="voteid" type="text" placeholder="Enter Vote ID">
     </div>
 
-    <button onclick="insertdata()">Submit</button>
+    <button type="button" id="submitBtn">Submit</button>
 
-    <div id="message"></div>
+    <div id="message" class="message"></div>
 </div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { 
+    getFirestore, 
+    doc,
+    setDoc,
+    getDoc,
+    Timestamp 
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+// 🔹 Your Firebase Config
+const firebaseConfig = {
+                apiKey: "AIzaSyBjm6WKCRmUNILEub4lKecRx11Lwvf-koM",
+    authDomain: "tn-voting-d09c5.firebaseapp.com",
+    projectId: "tn-voting-d09c5",
+    storageBucket: "tn-voting-d09c5.appspot.com",
+    messagingSenderId: "739902489472",
+    appId: "1:739902489472:web:362809592ddf36884c3765"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function insertdata() {
+
+    const aadhar = document.getElementById("aadhar").value.trim();
+    const birth = document.getElementById("birth").value;
+    const ph_no = document.getElementById("phonenumber").value.trim();
+    const vote_id = document.getElementById("voteid").value.trim();
+    const message = document.getElementById("message");
+
+    message.innerHTML = "";
+
+    if (!aadhar || !birth || !ph_no || !vote_id) {
+        message.innerHTML = "<span class='error'>All fields are required!</span>";
+        return;
+    }
+
+    try {
+
+        const docRef = doc(db, "voting", vote_id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            message.innerHTML = "<span class='error'>Vote ID already registered!</span>";
+            return;
+        }
+
+        await setDoc(docRef, {
+            aadhar: aadhar,
+            birth: Timestamp.fromDate(new Date(birth)),
+            isvoted: false,
+            ph_no: ph_no,
+            vote_id: vote_id,
+            createdAt: Timestamp.now()
+        });
+
+        message.innerHTML = "<span class='success'>Registration Successful!</span>";
+
+        // Clear inputs
+        document.getElementById("aadhar").value = "";
+        document.getElementById("birth").value = "";
+        document.getElementById("phonenumber").value = "";
+        document.getElementById("voteid").value = "";
+
+    } catch (error) {
+        message.innerHTML = "<span class='error'>" + error.message + "</span>";
+    }
+}
+
+// Safe button event
+document.getElementById("submitBtn").addEventListener("click", insertdata);
+
+</script>
 
 </body>
 </html>
