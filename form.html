@@ -84,7 +84,10 @@ button:hover{
 
 <div class="form-box">
     <h2>Voting Registration</h2>
-
+<div class="input-group">
+        <label>Name</label>
+        <input id="name" type="text" placeholder="Enter your name">
+    </div>
     <div class="input-group">
         <label>Aadhar Number</label>
         <input id="aadhar" type="text" placeholder="Enter 12 digit Aadhar">
@@ -135,14 +138,24 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 async function insertdata() {
-
+const name=document.getElementById("name").value.trim();
     const aadhar = document.getElementById("aadhar").value.trim();
     const birth = document.getElementById("birth").value;
     const ph_no = document.getElementById("phonenumber").value.trim();
     const vote_id = document.getElementById("voteid").value.trim();
     
 
-    message.innerHTML = "";
+   const today = new Date();
+    const birthDate= new Date(birth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const month = today.getMonth() - birthDate.getMonth();
+    if(month <0 || (month ==0&& today.getDate() < bithDate.getDate())){
+        age--;
+    }
+    if(age < 18){
+        alert("you must be 18+");
+        return;
+    }
 
     if (!aadhar || !birth || !ph_no || !vote_id) {
         message.innerHTML = "<span class='error'>All fields are required!</span>";
@@ -160,6 +173,7 @@ async function insertdata() {
         }
 
         await setDoc(docRef, {
+            name :name,
             aadhar: aadhar,
             birth: Timestamp.fromDate(new Date(birth)),
             isvoted: false,
