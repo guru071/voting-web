@@ -1,3 +1,8 @@
+import { db } from "./form";
+
+async function get() {
+  const vote_id = document.querySelector(".voteid").value
+}
 document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.getElementById("nextBtn");
 

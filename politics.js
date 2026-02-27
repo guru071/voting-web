@@ -1,4 +1,24 @@
-/* ELEMENTS */
+import { db } from "./firebase.js";
+
+import { doc, updateDoc ,getDoc}
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+
+const voteid=sessionStorage.getItem("voteid");
+const docRef = await doc(db,"voting",voteid);
+    const docSnap = await getDoc(docRef);
+document.addEventListener("DOMContentLoaded", () => {
+
+    const vote_found = sessionStorage.getItem("vote_found");
+    const isvoted = sessionStorage.getItem("isvoted");
+    const aadhar_found = sessionStorage.getItem("aadhar_found");
+
+    if (vote_found !== "true" && isvoted !== "true" && aadhar_found !== "true" && docSnap.data().isvoted !==true) {
+        alert("Unauthorized access");
+        window.location.href = "voting.html";
+    }
+
+});
 const rows = document.querySelectorAll(".candidate-row");
 const voteBtn = document.getElementById("voteBtn");
 const submitBtn = document.getElementById("submitBtn");
@@ -57,16 +77,31 @@ voteBtn.addEventListener("click", () => {
     }
 
 });
+submitBtn.addEventListener("click", async () => {
 
+    if (!confirmed) {
+        showMsg("Please confirm first!", "error");
+        return;
+    }
 
-/* SUBMIT BUTTON */
-submitBtn.addEventListener("click", () => {
+    try {
 
-    if (!confirmed) return;
+        const voteid = sessionStorage.getItem("voteid");
 
-    showMsg("✅ Vote submitted successfully!", "success");
+        await updateDoc(doc(db, "voting", voteid), {
+            isvoted: true,
+            leader: selectedRow.dataset.leader
+        });
 
-    disableAll();
+        showMsg("✅ Vote submitted successfully!", "success");
+        sessionStorage.clear("isvoted")
+
+        disableAll();
+
+    } catch (error) {
+        console.error(error);
+        showMsg("Error submitting vote!", "error");
+    }
 
 });
 

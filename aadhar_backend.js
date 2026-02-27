@@ -1,3 +1,8 @@
+import { db } from "./firebase.js";
+
+import { 
+    doc,getDoc
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 const inputs = document.querySelector(".inputs");
 inputs.addEventListener("input",function (e){
   const target = e.target;
@@ -23,18 +28,18 @@ ainputs.addEventListener("input",function (e){
 document.querySelector(".nextbtn")
   .addEventListener("click", aadhar_page);
 
-// Check login when page loads
+
 window.onload = function () {
   
   const vote_found = sessionStorage.getItem("vote_found");
 
-  if (vote_found !== "true") {
+  if (vote_found !== "true" && sessionStorage.getItem("isvoted")!=="true") {
     alert("Unauthorized access");
     window.location.href = "voting.html";
   }
 };
 
-function aadhar_page() {
+async function aadhar_page() {
 
   const aadharNo = document
     .getElementById("aadharno")
@@ -43,14 +48,26 @@ function aadhar_page() {
   if (aadharNo.length === 12 && !isNaN(aadharNo)) {
 
     alert("Valid Aadhaar");
-    const no=parseInt(aadharNo,10);
-    if(no==123456789012){
-      sessionStorage.setItem("aadhar_found", "true");
-      window.location.href = "politics.html";
-      
+    try{
+      const voteid=sessionStorage.getItem("voteid");
+      const docRef = await doc(db,"voting",voteid);
+    const docSnap = await getDoc(docRef);
+    if(docSnap.exists()){
+      console.log(docSnap.data().aadhar);
+      if(docSnap.data().aadhar === aadharNo){
+        sessionStorage.setItem("aadhar_found","true");
+        alert("Record founded !");
+        window.location.href ="politics.html"
+      }else{
+        alert("Record not founded");
+      }
+    }
     }
 
-  } else {
+   catch(error){
+    console.error(error);
+  }}
+  else {
     alert("Enter valid Aadhaar number");
   }
 }
