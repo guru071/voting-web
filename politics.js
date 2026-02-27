@@ -8,139 +8,125 @@ const aadhar_found = sessionStorage.getItem("aadhar_found");
   }
 };
 
-const candidates = document.querySelectorAll(".candidate");
+/* ELEMENTS */
+const rows = document.querySelectorAll(".candidate-row");
 const voteBtn = document.getElementById("voteBtn");
 const submitBtn = document.getElementById("submitBtn");
+const exportBtn = document.getElementById("exportBtn");
 const message = document.getElementById("message");
 
-let selectedCandidate = null;
+/* STATE */
+let selectedRow = null;
 let confirmed = false;
 
-/* SELECT CANDIDATE */
-candidates.forEach(card=>{
 
-    card.addEventListener("click",()=>{
+/* ROW CLICK */
+rows.forEach(row=>{
+
+    row.addEventListener("click",()=>{
 
         if(confirmed) return;
 
-        candidates.forEach(c=>c.classList.remove("selected"));
+        rows.forEach(r=>r.classList.remove("selected"));
 
-        card.classList.add("selected");
+        row.classList.add("selected");
 
-        selectedCandidate = card.querySelector("h3").innerText;
+        row.querySelector("input").checked = true;
 
-        showMessage("Selected: " + selectedCandidate,"info");
+        selectedRow = row;
+
+        showMsg("Selected: "+row.dataset.leader,"info");
 
     });
 
 });
 
-/* VOTE BUTTON */
+
+/* VOTE */
 voteBtn.addEventListener("click",()=>{
 
-    if(!selectedCandidate){
-        showMessage("Please select a candidate first!","error");
+    if(!selectedRow){
+        showMsg("Please select a candidate!","error");
         return;
     }
 
-    if(confirm("Confirm selection: "+selectedCandidate+" ?")){
+    const leader = selectedRow.dataset.leader;
+
+    if(confirm("Confirm vote for "+leader+" ?")){
 
         confirmed = true;
 
-        submitBtn.disabled = false;
         voteBtn.disabled = true;
+        submitBtn.disabled = false;
 
-        showMessage("Selection confirmed. Now submit your vote.","info");
+        showMsg("Selection confirmed. Click Submit.","info");
     }
 
 });
 
-/* SUBMIT BUTTON */
+
+/* SUBMIT */
 submitBtn.addEventListener("click",()=>{
 
     if(!confirmed) return;
 
-    localStorage.setItem("voted","true");
-    localStorage.setItem("candidate",selectedCandidate);
+    const data = {
+        party: selectedRow.dataset.party,
+        leader: selectedRow.dataset.leader,
+        time: new Date().toLocaleString()
+    };
 
-    showMessage("✅ Vote submitted successfully!","success");
+    localStorage.setItem("voteData",JSON.stringify(data));
+
+    showMsg("✅ Vote submitted successfully!","success");
 
     disableAll();
 
 });
 
-/* MESSAGE */
-function showMessage(text,type){
+
+/* EXPORT */
+exportBtn.addEventListener("click",()=>{
+
+    const data = JSON.parse(localStorage.getItem("voteData"));
+
+    if(!data){
+        alert("No vote found!");
+        return;
+    }
+
+    let csv = "Party,Leader,Time\n";
+    csv += `${data.party},${data.leader},${data.time}`;
+
+    const blob = new Blob([csv],{type:"text/csv"});
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "vote_result.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+});
+
+
+/* HELPERS */
+
+function showMsg(text,type){
 
     message.style.display="block";
-    message.className="message "+type;
+    message.className=type;
     message.innerText=text;
 
 }
 
-/* DISABLE */
 function disableAll(){
 
-    candidates.forEach(c=>c.style.pointerEvents="none");
-
-    submitBtn.disabled=true;
-    voteBtn.disabled=true;
-
-}
-const exportBtn = document.getElementById("exportBtn");
-
-/* STORE VOTES */
-function saveVote(candidateName) {
-
-    let votes = JSON.parse(localStorage.getItem("votes")) || {};
-
-    if (typeof votes !== "object" || Array.isArray(votes)) {
-        votes = {};
-    }
-
-    votes[candidateName] = (votes[candidateName] || 0) + 1;
-
-    localStorage.setItem("votes", JSON.stringify(votes));
-}
-
-
-/* MODIFY SUBMIT BUTTON */
-submitBtn.addEventListener("click", () => {
-
-    if (!confirmed) return;
-
-    saveVote(selectedCandidate);
-
-    showMessage("✅ Vote submitted successfully!", "success");
-
-    disableAll();
-});
-
-
-/* EXPORT TO EXCEL (CSV) */
-exportBtn.addEventListener("click", () => {
-
-    let votes = JSON.parse(localStorage.getItem("votes"));
-
-    if (!votes || typeof votes !== "object") {
-        alert("No votes recorded yet!");
-        return;
-    }
-
-    let csv = "Candidate,Votes\n";
-
-    Object.entries(votes).forEach(([candidate, count]) => {
-        csv += `"${candidate}",${count}\n`;
+    rows.forEach(r=>{
+        r.style.pointerEvents="none";
     });
 
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
+    submitBtn.disabled=true;
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "Voting_Results.csv";
-    link.click();
-
-    URL.revokeObjectURL(url);
-});
-
+}
