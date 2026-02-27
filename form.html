@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Voting Form</title>
+
+    <!-- Optional: remove favicon error -->
+    <link rel="icon" href="data:,">
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            Timestamp 
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+        // 🔹 Your Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBjm6WKCRmUNILEub4lKecRx11Lwvf-koM",
+            authDomain: "tn-voting-d09c5.firebaseapp.com",
+            projectId: "tn-voting-d09c5",
+            storageBucket: "tn-voting-d09c5.appspot.com",
+            messagingSenderId: "739902489472",
+            appId: "1:739902489472:web:362809592ddf36884c3765"
+        };
+
+        // 🔹 Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 🔹 Insert Data Function
+        async function insertdata() {
+            try {
+                const aadhar = document.querySelector(".aadhar").value.trim();
+                const birth = document.querySelector(".birth").value;
+                const ph_no = document.querySelector(".phonenumber").value.trim();
+                const vote_id = document.querySelector(".voteid").value.trim();
+
+                // Basic validation
+                if (!aadhar || !birth || !ph_no || !vote_id) {
+                    alert("All fields are required!");
+                    return;
+                }
+
+                await addDoc(collection(db, "voting",vote_id), {
+                    aadhar: aadhar,
+                    birth: Timestamp.fromDate(new Date(birth)),
+                    isvoted: false,
+                    ph_no: ph_no,
+                    vote_id: vote_id,
+                    createdAt: Timestamp.now()
+                });
+
+                console.log("Data Inserted Successfully!");
+
+                // Clear fields
+                document.querySelector(".aadhar").value = "";
+                document.querySelector(".birth").value = "";
+                document.querySelector(".phonenumber").value = "";
+                document.querySelector(".voteid").value = "";
+
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Error: " + error.message);
+            }
+        }
+
+        // Make function available to button
+        window.insertdata = insertdata;
+    </script>
+</head>
+
+<body>
+    <h2>Voting Registration Form</h2>
+
+    <table border="1" cellpadding="10">
+        <tr>
+            <td>Aadhar</td>
+            <td><input class="aadhar" type="text" placeholder="Enter 12 digit aadhar.no"></td>
+        </tr>
+        <tr>
+            <td>Birth</td>
+            <td><input class="birth" type="date" placeholder="Enter date of birth"></td>
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <td><input class="phonenumber" type="text" placeholder="Enter 10 digit phone.no"></td>
+        </tr>
+        <tr>
+            <td>Vote ID</td>
+            <td><input class="voteid" type="text" placeholder="Enter vote ID"></td>
+        </tr>
+    </table>
+
+    <br>
+    <button onclick="insertdata()">Submit</button>
+</body>
+</html>
