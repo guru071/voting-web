@@ -44,15 +44,14 @@
                     return;
                 }
 
-                await addDoc(collection(db, "voting",vote_id), {
-                    aadhar: aadhar,
-                    birth: Timestamp.fromDate(new Date(birth)),
-                    isvoted: false,
-                    ph_no: ph_no,
-                    vote_id: vote_id,
-                    createdAt: Timestamp.now()
-                });
-
+                await setDoc(doc(db, "voting", vote_id), {
+    aadhar: aadhar,
+    birth: Timestamp.fromDate(new Date(birth)),
+    isvoted: false,
+    ph_no: ph_no,
+    vote_id: vote_id,
+    createdAt: Timestamp.now()
+});
                 console.log("Data Inserted Successfully!");
 
                 // Clear fields
