@@ -140,7 +140,7 @@ async function insertdata() {
     const birth = document.getElementById("birth").value;
     const ph_no = document.getElementById("phonenumber").value.trim();
     const vote_id = document.getElementById("voteid").value.trim();
-    const message = document.getElementById("message");
+    
 
     message.innerHTML = "";
 
@@ -165,7 +165,7 @@ async function insertdata() {
             isvoted: false,
             ph_no: ph_no,
             vote_id: vote_id,
-            createdAt: Timestamp.now()
+            
         });
 
         message.innerHTML = "<span class='success'>Registration Successful!</span>";
