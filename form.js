@@ -16,7 +16,7 @@ const message = document.getElementById("message");
 async function insertdata() {
 
     const name = document.getElementById("name").value.trim();
-    const aadhar = document.getElementById("aadhar").value.trim();
+    const aadhar = document.getElementById("aadhar").value.trim().replaceAll(" ","");
     const birth = document.getElementById("birth").value;
     const ph_no = document.getElementById("phonenumber").value.trim();
     const vote_id = document.getElementById("voteid").value.trim();
@@ -25,7 +25,7 @@ async function insertdata() {
         message.innerHTML = "<span class='error'>All fields are required!</span>";
         return;
     }
-    if (aadhar.length != 12 || isNaN(aadhar)) {
+    if (aadhar.length === 12 && !isNaN(aadhar)) {
         alert("Enter vaild aadhar");
     }
     // AGE CHECK
@@ -93,7 +93,4 @@ async function insertdata() {
 }
 
 document.getElementById("submitBtn")
-
     .addEventListener("click", insertdata);
-
-
