@@ -94,8 +94,8 @@ submitBtn.addEventListener("click", async () => {
         });
 
         showMsg("✅ Vote submitted successfully!", "success");
-        sessionStorage.clear("isvoted")
-
+        sessionStorage.clear("isvoted");
+        sessionStorage.clear("voting");
         disableAll();
 
     } catch (error) {
