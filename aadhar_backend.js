@@ -57,7 +57,7 @@ async function aadhar_page() {
       if(docSnap.data().aadhar === aadharNo){
         sessionStorage.setItem("aadhar_found","true");
         alert("Record founded !");
-        document.querySelector(".aadhar")="";
+
         window.location.href ="politics.html";
       }else{
         alert("Record not founded");
@@ -73,3 +73,4 @@ async function aadhar_page() {
   }
 
 }
+
