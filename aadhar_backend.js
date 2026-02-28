@@ -53,7 +53,7 @@ async function aadhar_page() {
       const docRef = await doc(db,"voting",voteid);
     const docSnap = await getDoc(docRef);
     if(docSnap.exists()){
-      c
+      
       if(docSnap.data().aadhar === aadharNo){
         sessionStorage.setItem("aadhar_found","true");
         alert("Record founded !");
@@ -70,4 +70,5 @@ async function aadhar_page() {
   else {
     alert("Enter valid Aadhaar number");
   }
+
 }
