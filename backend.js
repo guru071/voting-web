@@ -34,7 +34,8 @@ async function click_next() {
           sessionStorage.setItem("isvoted", "true");
           sessionStorage.setItem("vote_found", "true");
 
-
+         document.getElementById("voteid").value="";
+         document.getElementById("birth").value="";
           window.location.href = "aadhar.html";
 
         } else {
