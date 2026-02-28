@@ -77,7 +77,7 @@ button:hover{
     color:red;
 }
 </style>
-
+<link rel="stylesheet" href="form.css">
 </head>
 
 <body>
@@ -86,33 +86,33 @@ button:hover{
     <h2>Voting Registration</h2>
 <div class="input-group">
         <label>Name</label>
-        <input id="name" type="text" placeholder="Enter your name">
+        <input class="inp" id="name" type="text" placeholder="Enter your name">
     </div>
     <div class="input-group">
         <label>Aadhar Number</label>
-        <input id="aadhar" type="text" placeholder="Enter 12 digit Aadhar">
+        <input class="inp"id="aadhar" type="text" placeholder="Enter 12 digit Aadhar">
     </div>
 
     <div class="input-group">
         <label>Date of Birth</label>
-        <input id="birth" type="date">
+        <input class="inp" id="birth" type="date">
     </div>
 
     <div class="input-group">
         <label>Phone Number</label>
-        <input id="phonenumber" type="text" placeholder="Enter 10 digit phone">
+        <input class="inp" id="phonenumber" type="text" placeholder="Enter 10 digit phone">
     </div>
 
     <div class="input-group">
         <label>Gmail</label>
-        <input id="gmail" type="text" placeholder="Enter gmail">
+        <input class="inp" id="gmail" type="text" placeholder="Enter gmail">
     </div>
     <div class="input-group">
         <label>Vote ID</label>
-        <input id="voteid" type="text" placeholder="Enter Vote ID">
+        <input class="inp" id="voteid" type="text" placeholder="Enter Vote ID">
     </div>
 
-    <button type="button" id="submitBtn">Submit</button>
+    <button class="inp" type="button" id="submitBtn">Submit</button>
 
     <div id="message" class="message"></div>
 </div>
@@ -120,6 +120,8 @@ button:hover{
 <script type="module" src="form.js">
 
 </script>
-
+<video autoplay muted loop>
+    <source src="0228.mp4" type="video/mp4">
+</video>
 </body>
 </html>
