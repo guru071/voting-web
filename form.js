@@ -27,6 +27,7 @@ async function insertdata() {
     }
     if (aadharNo.length === 12 && !isNaN(aadharNo)) {
         alert("Enter vaild aadhar");
+        return ;
     }
     // AGE CHECK
     const today = new Date();
@@ -93,4 +94,5 @@ async function insertdata() {
 }
 
 document.getElementById("submitBtn")
+
     .addEventListener("click", insertdata);
