@@ -37,11 +37,20 @@ body.aadhar-page {
 
 body.voting-page {
   /*background: linear-gradient(-45deg, #0f9b0f, #38ef7d, #a8e063);*/
-  background-image: url("tn5.jpg");
+  background-image: url("f.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  animation: bgchange 30s infinite ;
 }
-
+@keyframes bgchange{
+  0%{background-image: url("f.jpeg");}
+  25%{background-image: url("tn5.jpg");}
+  50%{background-image: url("tn2.jpg");}
+  75%{background-image: url("f.jpeg");}
+  100%{background-image: url("tn5.jpg");}
+}
 /* =========================
    GLASS CARD
 ========================= */
@@ -146,9 +155,10 @@ button:active {
 /* =========================
    BACKGROUND ANIMATION
 ========================= */
-@keyframes flowAnimation {
+   @keyframes flowAnimation {
   0% {
     background-position: 0% 50%;
+    
   }
   50% {
     background-position: 100% 50%;
@@ -157,7 +167,6 @@ button:active {
     background-position: 0% 50%;
   }
 }
-/*---------mobile view-------------*/
 /*---------mobile view-------------*/
 @media (max-width: 768px){
  body.aadhar-page .card,
