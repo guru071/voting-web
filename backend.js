@@ -19,7 +19,7 @@ async function click_next() {
   try {
     const docRef = doc(db, "voting", voteid);
     const docSnap = await getDoc(docRef);
-    if (voteid == docSnap.data().vote_id) {
+    if (Number(voteid) == docSnap.data().vote_id) {
       const ddate = docSnap.data().birth.toDate();
       if (docSnap.exists()) {
 

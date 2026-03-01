@@ -54,10 +54,10 @@ async function aadhar_page() {
     const docSnap = await getDoc(docRef);
     if(docSnap.exists()){
       
-      if(docSnap.data().aadhar === aadharNo){
+      if(docSnap.data().aadhar === Number(aadharNo)){
         sessionStorage.setItem("aadhar_found","true");
         alert("Record founded !");
-
+        document.querySelector(".aadhar")="";
         window.location.href ="politics.html";
       }else{
         alert("Record not founded");
@@ -71,6 +71,4 @@ async function aadhar_page() {
   else {
     alert("Enter valid Aadhaar number");
   }
-
 }
-

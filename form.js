@@ -25,7 +25,7 @@ async function insertdata() {
         message.innerHTML = "<span class='error'>All fields are required!</span>";
         return;
     }
-    if (aadhar.length != 12 || isNaN(aadhar)) {
+    if (aadhar.length === 12 && !isNaN(aadhar)) {
         alert("Enter vaild aadhar");
     }
     // AGE CHECK
@@ -71,10 +71,10 @@ async function insertdata() {
         // ✅ Insert Data
         await setDoc(docRef, {
             name: name,
-            aadhar: aadhar,
+            aadhar: Number(aadhar),
             birth: Timestamp.fromDate(new Date(birth)),
             isvoted: false,
-            ph_no: ph_no,
+            ph_no: Number(ph_no),
             vote_id: vote_id,
             gmail: gmail
         });
@@ -93,5 +93,4 @@ async function insertdata() {
 }
 
 document.getElementById("submitBtn")
-
     .addEventListener("click", insertdata);

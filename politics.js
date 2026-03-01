@@ -1,19 +1,31 @@
 import { db } from "./firebase.js";
 
-import { doc, updateDoc ,getDoc}
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+import { doc, updateDoc, getDoc }
+    from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 
-const voteid=sessionStorage.getItem("voteid");
-const docRef = await doc(db,"voting",voteid);
-    const docSnap = await getDoc(docRef);
+const voteid = sessionStorage.getItem("voteid");
+const docRef = await doc(db, "voting", voteid);
+const docSnap = await getDoc(docRef);
+window.onload = function () {
+
+    const vote_found = sessionStorage.getItem("vote_found");
+    const isvoted = sessionStorage.getItem("isvoted");
+    const aadhar_found = sessionStorage.getItem("aadhar_found");
+
+    if (vote_found !== "true" && isvoted !== "true" && aadhar_found !== "true" && docSnap.data().isvoted !== true) {
+        alert("Unauthorized access");
+        window.location.href = "voting.html";
+    }
+
+}
 document.addEventListener("DOMContentLoaded", () => {
 
     const vote_found = sessionStorage.getItem("vote_found");
     const isvoted = sessionStorage.getItem("isvoted");
     const aadhar_found = sessionStorage.getItem("aadhar_found");
 
-    if (vote_found !== "true" && isvoted !== "true" && aadhar_found !== "true" && docSnap.data().isvoted !==true) {
+    if (vote_found !== "true" && isvoted !== "true" && aadhar_found !== "true" && docSnap.data().isvoted !== true) {
         alert("Unauthorized access");
         window.location.href = "voting.html";
     }
@@ -56,58 +68,59 @@ rows.forEach(row => {
 
 /* VOTE BUTTON */
 voteBtn.addEventListener("click", () => {
-if(docSnap.data().isvoted !==true){
-     if (!selectedRow) {
-        showMsg("Please select a candidate!", "error");
-        return;
+    if (docSnap.data().isvoted !== true) {
+        if (!selectedRow) {
+            showMsg("Please select a candidate!", "error");
+            return;
+        }
+
+        const leader = selectedRow.dataset.leader;
+
+        const confirmVote = confirm("Confirm vote for " + leader + " ?");
+
+        if (confirmVote) {
+
+            confirmed = true;
+
+            voteBtn.disabled = true;
+            submitBtn.disabled = false;
+
+            showMsg("Selection confirmed. Click Submit.", "info");
+        }
+
     }
-
-    const leader = selectedRow.dataset.leader;
-
-    const confirmVote = confirm("Confirm vote for " + leader + " ?");
-
-    if (confirmVote) {
-
-        confirmed = true;
-
-        voteBtn.disabled = true;
-        submitBtn.disabled = false;
-
-        showMsg("Selection confirmed. Click Submit.", "info");
-    }
-
 }
-}
-   );
+);
 submitBtn.addEventListener("click", async () => {
-if(docSnap.data().isvoted !==true){
-    if (!confirmed) {
-        showMsg("Please confirm first!", "error");
-        return;
+    if (docSnap.data().isvoted !== true) {
+        if (!confirmed) {
+            showMsg("Please confirm first!", "error");
+            return;
+        }
+
+        try {
+
+            const voteid = sessionStorage.getItem("voteid");
+
+            await updateDoc(doc(db, "voting", voteid), {
+                isvoted: true,
+                leader: selectedRow.dataset.leader
+            });
+
+            showMsg("✅ Vote submitted successfully!", "success");
+            sessionStorage.clear("isvoted");
+            sessionStorage.clear("vote_found");
+            sessionStorage.clear("aadhar_found")
+            disableAll();
+            window.location.href = "voting";
+
+        } catch (error) {
+            console.error(error);
+            showMsg("Error submitting vote!", "error");
+        }
+
     }
-
-    try {
-
-        const voteid = sessionStorage.getItem("voteid");
-
-        await updateDoc(doc(db, "voting", voteid), {
-            isvoted: true,
-            leader: selectedRow.dataset.leader
-        });
-
-        showMsg("✅ Vote submitted successfully!", "success");
-        sessionStorage.clear("isvoted");
-        sessionStorage.clear("vote_found");
-        sessionStorage.clear("aadhar_found")
-        disableAll();
-        window.location.href="voting";
-
-    } catch (error) {
-        console.error(error);
-        showMsg("Error submitting vote!", "error");
-    }
-
-}});
+});
 
 
 /* HELPERS */
