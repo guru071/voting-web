@@ -19,7 +19,7 @@ async function click_next() {
   try {
     const docRef = doc(db, "voting", voteid);
     const docSnap = await getDoc(docRef);
-    if (Number(voteid) == docSnap.data().vote_id) {
+    if (Number(voteid) == Number(docSnap.data().vote_id)) {
       const ddate = docSnap.data().birth.toDate();
       if (docSnap.exists()) {
 
@@ -43,7 +43,9 @@ async function click_next() {
         } else {
           alert("Invalid Login Details");
         }
-      }
+      }else {
+          alert("Invalid Login Details");
+        }
     }
   } catch (error) {
     alert("Record not found");

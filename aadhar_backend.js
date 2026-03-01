@@ -54,7 +54,7 @@ async function aadhar_page() {
     const docSnap = await getDoc(docRef);
     if(docSnap.exists()){
       
-      if(docSnap.data().aadhar === Number(aadharNo)){
+      if(Number(docSnap.data().aadhar) === Number(aadharNo)){
         sessionStorage.setItem("aadhar_found","true");
         alert("Record founded !");
         document.querySelector(".aadhar")="";
