@@ -109,10 +109,7 @@ td {
 
   font-size: 16px;
   color: #000;
-  box-shadow: 0 0 10px white,
-        0 0 10px white,
-        0 0 10px white,
-        0 0 10px white;
+
 }
 
 /* =========================
@@ -139,10 +136,7 @@ td {
   outline: none;
 
   color: #000;
-  box-shadow: 0 0 10px white,
-        0 0 10px white,
-        0 0 10px white,
-        0 0 10px white;
+
 }
 
 /* =========================
