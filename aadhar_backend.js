@@ -14,17 +14,6 @@ inputs.addEventListener("input",function (e){
   console.log(val);
 });
 
-
-const ainputs = document.querySelector(".aadhar");
-ainputs.addEventListener("input",function (e){
-  const target = e.target;
-  const val = target.value;
-  if(isNaN(val)){
-    target.value = "";
-    return ;
-  }
-  console.log(val);
-});
 document.querySelector(".nextbtn")
   .addEventListener("click", aadhar_page);
 
@@ -57,7 +46,9 @@ async function aadhar_page() {
       if(Number(docSnap.data().aadhar) === Number(aadharNo)){
         sessionStorage.setItem("aadhar_found","true");
         alert("Record founded !");
-        document.querySelector(".aadhar")="";
+        document
+    .getElementById("aadharno")
+    .value="";
         window.location.href ="politics.html";
       }else{
         alert("Record not founded");
