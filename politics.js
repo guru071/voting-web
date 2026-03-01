@@ -56,8 +56,8 @@ rows.forEach(row => {
 
 /* VOTE BUTTON */
 voteBtn.addEventListener("click", () => {
-
-    if (!selectedRow) {
+if(docSnap.data().isvoted !==true){
+     if (!selectedRow) {
         showMsg("Please select a candidate!", "error");
         return;
     }
@@ -76,9 +76,11 @@ voteBtn.addEventListener("click", () => {
         showMsg("Selection confirmed. Click Submit.", "info");
     }
 
-});
+}
+}
+   );
 submitBtn.addEventListener("click", async () => {
-
+if(docSnap.data().isvoted !==true){
     if (!confirmed) {
         showMsg("Please confirm first!", "error");
         return;
@@ -95,15 +97,17 @@ submitBtn.addEventListener("click", async () => {
 
         showMsg("✅ Vote submitted successfully!", "success");
         sessionStorage.clear("isvoted");
-        sessionStorage.clear("voting");
+        sessionStorage.clear("vote_found");
+        sessionStorage.clear("aadhar_found")
         disableAll();
+        window.location.href="voting";
 
     } catch (error) {
         console.error(error);
         showMsg("Error submitting vote!", "error");
     }
 
-});
+}});
 
 
 /* HELPERS */
