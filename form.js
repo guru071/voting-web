@@ -25,7 +25,7 @@ async function insertdata() {
         message.innerHTML = "<span class='error'>All fields are required!</span>";
         return;
     }
-    if (aadhar.length === 12 && !isNaN(aadhar)) {
+    if (aadhar.length != 12   || isNaN(aadhar)) {
         alert("Enter vaild aadhar");
     }
     // AGE CHECK
