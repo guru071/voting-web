@@ -48,9 +48,6 @@ video {
     border: none;
     border-radius: 10px;
     outline: none;
-    box-shadow: 0 0 10px white,
-        0 0 10px white,
-        0 0 10px white,
-        0 0 10px white;
+ 
     color: #000;
 }
